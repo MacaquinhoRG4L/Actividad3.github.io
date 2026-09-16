@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad de Aprendizaje - Ciberdefensa y Seguridad Operativa</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef2f7;
+    color:#1f2937;
+    line-height:1.5;
+}
+header{
+    background:linear-gradient(135deg,#0f2747,#164e73);
+    color:white;
+    padding:45px 20px;
+    text-align:center;
+}
+header .badge{
+    display:inline-block;
+    background:#f5c542;
+    color:#172033;
+    font-weight:800;
+    padding:7px 16px;
+    border-radius:30px;
+    margin-bottom:14px;
+}
+header h1{font-size:clamp(28px,5vw,48px);margin-bottom:10px}
+header p{font-size:18px;opacity:.92}
+.container{max-width:1250px;margin:auto;padding:35px 20px 55px}
+.section{
+    background:white;
+    border-radius:18px;
+    padding:28px;
+    margin-bottom:28px;
+    box-shadow:0 8px 25px rgba(15,39,71,.08);
+}
+.section h2{
+    color:#123b61;
+    margin-bottom:10px;
+    font-size:27px;
+}
+.section-intro{color:#5b6573;margin-bottom:25px}
+
+/* CUADRO SINOPTICO */
+.synoptic{
+    overflow-x:auto;
+    padding:10px 0 20px;
+}
+.root{
+    min-width:260px;
+    width:360px;
+    margin:0 auto 30px;
+    background:#123b61;
+    color:white;
+    padding:20px;
+    border-radius:14px;
+    text-align:center;
+    font-size:21px;
+    font-weight:800;
+    box-shadow:0 8px 20px rgba(18,59,97,.22);
+    position:relative;
+}
+.root:after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:100%;
+    height:28px;
+    border-left:3px solid #7892aa;
+}
+.branches{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+    min-width:1000px;
+    position:relative;
+}
+.branches:before{
+    content:"";
+    position:absolute;
+    top:-14px;
+    left:16.6%;
+    right:16.6%;
+    border-top:3px solid #7892aa;
+}
+.branch{
+    position:relative;
+    padding-top:15px;
+}
+.branch:before{
+    content:"";
+    position:absolute;
+    top:-15px;
+    left:50%;
+    height:15px;
+    border-left:3px solid #7892aa;
+}
+.branch-title{
+    background:#dceaf5;
+    border:2px solid #82a7c6;
+    color:#123b61;
+    padding:16px 14px;
+    border-radius:12px;
+    text-align:center;
+    font-size:19px;
+    font-weight:800;
+    margin-bottom:18px;
+}
+.branch-title small{
+    display:block;
+    font-weight:500;
+    font-size:13px;
+    color:#53677b;
+    margin-top:3px;
+}
+.brace{
+    display:flex;
+    gap:10px;
+    align-items:stretch;
+}
+.brace-symbol{
+    width:25px;
+    min-width:25px;
+    border-right:4px solid #164e73;
+    border-top:4px solid #164e73;
+    border-bottom:4px solid #164e73;
+    border-radius:0 12px 12px 0;
+}
+.items{flex:1;display:grid;gap:10px}
+.item{
+    background:#f7f9fc;
+    border-left:4px solid #164e73;
+    padding:12px 14px;
+    border-radius:9px;
+}
+.item strong{display:block;color:#173d5d;margin-bottom:3px}
+.item span{font-size:14px;color:#5d6977}
+
+/* CASO */
+.case-button{
+    width:100%;
+    border:0;
+    background:linear-gradient(135deg,#176b5b,#239178);
+    color:white;
+    padding:18px 22px;
+    border-radius:13px;
+    font-size:18px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+.case-button:hover{transform:translateY(-2px);filter:brightness(1.04)}
+.case-button span{float:right;font-size:24px}
+.modal{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    inset:0;
+    background:rgba(8,20,34,.72);
+    padding:25px;
+    overflow:auto;
+}
+.modal.active{display:flex;align-items:center;justify-content:center}
+.modal-box{
+    width:min(900px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+.modal-head{
+    background:#123b61;
+    color:white;
+    padding:22px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.modal-head h2{font-size:25px}
+.close{
+    background:transparent;
+    color:white;
+    border:0;
+    font-size:32px;
+    cursor:pointer;
+}
+.case-content{padding:28px}
+.case-content h3{color:#123b61;margin:18px 0 7px}
+.case-content h3:first-child{margin-top:0}
+.case-content p{margin-bottom:10px}
+.case-content ul{padding-left:22px;margin-bottom:12px}
+.case-content li{margin-bottom:5px}
+.highlight{
+    background:#e8f5f1;
+    border-left:5px solid #239178;
+    padding:14px 16px;
+    border-radius:8px;
+    margin:15px 0;
+}
+
+/* RESUMEN */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+.card{
+    padding:20px;
+    border-radius:13px;
+    background:#f5f8fb;
+    border:1px solid #dce5ed;
+}
+.card h3{color:#123b61;margin-bottom:7px}
+footer{
+    text-align:center;
+    padding:25px;
+    background:#10283f;
+    color:#dbe5ee;
+}
+@media(max-width:900px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+    .container{padding:20px 12px 40px}
+    .section{padding:20px}
+    .grid{grid-template-columns:1fr}
+    .root{width:280px}
+    header{padding:35px 15px}
+    .modal{padding:10px}
+    .case-content{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="badge">UNIDAD 3</div>
+    <h1>Seguridad en Sistemas Operativos</h1>
+    <p>Cuadro sinóptico integrador de ciberdefensa y seguridad operativa</p>
+</header>
+
+<main class="container">
+
+<section class="section">
+    <h2>Cuadro sinóptico integrador</h2>
+    <p class="section-intro">
+        Elementos de seguridad, herramientas de prevención y detección, y acciones del usuario
+        en el hogar y en el trabajo.
+    </p>
+
+    <div class="synoptic">
+        <div class="root">CIBERDEFENSA Y SEGURIDAD OPERATIVA</div>
+
+        <div class="branches">
+
+            <div class="branch">
+                <div class="branch-title">
+                    1. ELEMENTOS DE SEGURIDAD EN SISTEMAS OPERATIVOS
+                    <small>Protección del sistema y de la información</small>
+                </div>
+
+                
+                    
+                    <div class="items">
+                        <div class="item">
+                            <strong>Control de acceso</strong>
+                            <span>Usuarios, contraseñas, permisos y autenticación.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Actualizaciones</strong>
+                            <span>Corrección de vulnerabilidades y parches de seguridad.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Cifrado</strong>
+                            <span>Protección de archivos y datos frente a accesos no autorizados.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Firewall</strong>
+                            <span>Control del tráfico de red entrante y saliente.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Copias de seguridad</strong>
+                            <span>Recuperación de información ante fallos o ataques.</span>
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="branch">
+                <div class="branch-title">
+                    2. HERRAMIENTAS DE PREVENCIÓN Y DETECCIÓN
+                    <small>Identificar y reducir amenazas</small>
+                </div>
+
+               
+                    
+                    <div class="items">
+                        <div class="item">
+                            <strong>Antivirus / EDR</strong>
+                            <span>Detectan, bloquean y analizan software malicioso.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Antispam</strong>
+                            <span>Filtra mensajes sospechosos y reduce el correo malicioso.</span>
+                        </div>
+                        <div class="item">
+                            <strong>IDS / IPS</strong>
+                            <span>Detectan o bloquean actividades anómalas en la red.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Monitoreo y registros</strong>
+                            <span>Permiten revisar eventos, accesos y comportamientos anormales.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Filtrado web</strong>
+                            <span>Bloquea sitios maliciosos o de riesgo conocido.</span>
+                        </div>
+                    </div>
+                
+            </div>
+
+            <div class="branch">
+                <div class="branch-title">
+                    3. ACCIONES DEL USUARIO
+                    <small>El factor humano como defensa</small>
+                </div>
+
+                
+                    
+                    <div class="items">
+                        <div class="item">
+                            <strong>Contraseñas seguras</strong>
+                            <span>Usar contraseñas únicas y evitar compartirlas.</span>
+                        </div>
+                        <div class="item">
+                            <strong>MFA</strong>
+                            <span>Agregar un segundo factor de autenticación.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Phishing</strong>
+                            <span>Verificar remitentes, enlaces y solicitudes urgentes.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Uso seguro</strong>
+                            <span>Evitar software no confiable y dispositivos desconocidos.</span>
+                        </div>
+                        <div class="item">
+                            <strong>Reporte de incidentes</strong>
+                            <span>Informar rápidamente cualquier comportamiento sospechoso.</span>
+                        </div>
+                    </div>
+                
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Estudio de caso práctico</h2>
+    <p class="section-intro">
+        El siguiente botón abre el estudio de caso completo de forma interactiva.
+        Está diseñado para cumplir con el apartado adicional de la actividad.
+    </p>
+
+    <button class="case-button" onclick="openCase()">
+        📋 Ver estudio de caso: estrategia contra ransomware y phishing
+        <span>＋</span>
+    </button>
+</section>
+
+<section class="section">
+    <h2>Relación de los conceptos</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Prevenir</h3>
+            <p>Actualizaciones, contraseñas seguras, MFA, firewall y capacitación.</p>
+        </div>
+        <div class="card">
+            <h3>Detectar</h3>
+            <p>Antivirus, EDR, IDS/IPS, filtros y monitoreo de eventos.</p>
+        </div>
+        <div class="card">
+            <h3>Responder</h3>
+            <p>Reportar incidentes, aislar equipos afectados y activar protocolos.</p>
+        </div>
+        <div class="card">
+            <h3>Recuperar</h3>
+            <p>Usar copias de seguridad verificadas y restablecer operaciones.</p>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    Actividad de Aprendizaje · Unidad 3 · Analisis de Ciberdefensa y Seguridad Operativa · Emmanuel Flores Que
+</footer>
+
+<div class="modal" id="caseModal" onclick="outsideClose(event)">
+    <div class="modal-box">
+        <div class="modal-head">
+            <h2>Estudio de caso práctico</h2>
+            <button class="close" onclick="closeCase()">×</button>
+        </div>
+
+        <div class="case-content">
+            <h3>Situación</h3>
+            <p>
+                Una pequeña empresa de servicios cuenta con 12 empleados que utilizan
+                computadoras con Windows para administrar clientes, documentos y facturación.
+                La empresa ha recibido correos de phishing y uno de los empleados abrió un
+                archivo adjunto sospechoso. Existe el riesgo de una infección por ransomware
+                y de robo de credenciales.
+            </p>
+
+            <h3>Objetivo de la estrategia</h3>
+            <p>
+                Reducir la probabilidad de infección y robo de información mediante una
+                estrategia integral basada en prevención, detección, respuesta y recuperación.
+            </p>
+
+            <div class="highlight">
+                <strong>Principio central:</strong> la seguridad no depende de una sola
+                herramienta; combina controles técnicos, copias de seguridad y acciones
+                responsables de los usuarios.
+            </div>
+
+            <h3>1. Medidas de prevención</h3>
+            <ul>
+                <li>Mantener el sistema operativo y las aplicaciones actualizadas.</li>
+                <li>Instalar y mantener activo un antivirus/EDR en los equipos.</li>
+                <li>Utilizar firewall y restringir servicios innecesarios.</li>
+                <li>Implementar contraseñas únicas y autenticación multifactor.</li>
+                <li>Capacitar al personal para identificar phishing, archivos sospechosos y enlaces fraudulentos.</li>
+                <li>Limitar los permisos de los usuarios según sus funciones.</li>
+            </ul>
+
+            <h3>2. Protección contra ransomware</h3>
+            <ul>
+                <li>Realizar copias de seguridad periódicas de la información crítica.</li>
+                <li>Mantener al menos una copia de respaldo separada del equipo principal.</li>
+                <li>Verificar periódicamente que las copias puedan restaurarse correctamente.</li>
+                <li>Evitar ejecutar archivos desconocidos recibidos por correo o mensajería.</li>
+            </ul>
+
+            <h3>3. Detección y respuesta</h3>
+            <ul>
+                <li>Configurar alertas del antivirus/EDR y revisar eventos relevantes.</li>
+                <li>Si un usuario detecta actividad sospechosa, debe desconectar el equipo de la red cuando sea seguro hacerlo.</li>
+                <li>Reportar inmediatamente el incidente al responsable de TI.</li>
+                <li>No borrar evidencias ni intentar negociar con atacantes por cuenta propia.</li>
+                <li>Aislar equipos afectados y analizar el alcance del incidente.</li>
+            </ul>
+
+            <h3>4. Recuperación</h3>
+            <p>
+                Una vez controlado el incidente, se deben limpiar o reinstalar los equipos
+                afectados, cambiar las credenciales comprometidas y restaurar la información
+                desde copias de seguridad verificadas. Posteriormente se debe analizar qué
+                permitió el ataque y aplicar medidas para evitar su repetición.
+            </p>
+
+            <h3>Resultado esperado</h3>
+            <p>
+                Con esta estrategia, la empresa disminuye su exposición al phishing y al
+                ransomware, mejora la capacidad de detectar incidentes y aumenta la
+                posibilidad de recuperar rápidamente sus operaciones sin depender únicamente
+                del pago de un rescate.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+function openCase(){
+    document.getElementById("caseModal").classList.add("active");
+    document.body.style.overflow="hidden";
+}
+function closeCase(){
+    document.getElementById("caseModal").classList.remove("active");
+    document.body.style.overflow="";
+}
+function outsideClose(event){
+    if(event.target.id==="caseModal") closeCase();
+}
+document.addEventListener("keydown",function(event){
+    if(event.key==="Escape") closeCase();
+});
+</script>
+
+</body>
+</html>
